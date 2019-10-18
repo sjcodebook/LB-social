@@ -1,0 +1,284 @@
+<template name="addUser">
+  {{#if is_allowed 'User Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fa fa-plus-square mr-2"></i>
+          ADD USER
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          <a href="/usermanagement"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          <form class="addUserForm">
+            <div>
+              <label for="newUserName">Pseudonym:</label>
+              <div class="checkAddUserNameInput">
+                <input
+                  id="newUserName"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddUserNameNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers are not allowed in input
+                </div>
+              </div>
+              <div class="checkAddUserNameInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+            </div>
+            <script>
+              $(document).ready(function() {
+                $('#newUserName').val('');
+                $('#newEmail').val('');
+                $('#newMobile_number').val('');
+                $('#newLocation').val('');
+
+                $.getScript(
+                  'https://maps.googleapis.com/maps/api/js?libraries=places&key=' +
+                    process.env.GOOGLE,
+                  function() {
+                    $.getScript(
+                      'https://cdnjs.cloudflare.com/ajax/libs/geocomplete/1.7.0/jquery.geocomplete.min.js',
+                      function() {
+                        $('#newLocation')
+                          .geocomplete()
+                          .bind('geocode:result', function(event, result) {
+                            let data = JSON.stringify(result);
+                            data = JSON.parse(data);
+
+                            let address_components = data.address_components;
+                            let city = '';
+                            let state = '';
+                            let country = '';
+                            let lat = data.geometry.location.lat;
+                            let lng = data.geometry.location.lng;
+                            let formatted_address = data.formatted_address;
+                            let place_id = data.place_id;
+
+                            for (
+                              let i = 0, len = address_components.length;
+                              i < len;
+                              i++
+                            ) {
+                              let ac = result.address_components[i];
+                              if (ac.types.indexOf('locality') >= 0)
+                                city = ac.long_name;
+                              if (
+                                ac.types.indexOf(
+                                  'administrative_area_level_1'
+                                ) >= 0
+                              )
+                                state = ac.long_name;
+                              if (ac.types.indexOf('country') >= 0)
+                                country = ac.long_name;
+                            }
+
+                            Session.set('city', city);
+                            Session.set('state', state);
+                            Session.set('country', country);
+
+                            $('#city').val(city);
+                            $('#state').val(state);
+                            $('#country').val(country);
+                            $('#lat').val(lat);
+                            $('#lng').val(lng);
+                            $('#formatted_address').val(formatted_address);
+                            $('#place_id').val(place_id);
+                          });
+                      }
+                    );
+                  }
+                );
+              });
+            </script>
+            <div>
+              <label class="mt-2" for="newLocation">Location:</label>
+              <div class="checkAddUserInput">
+                <input
+                  id="newLocation"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  autocomplete="off"
+                  required
+                />
+                <input id="city" name="city" required="" type="hidden" />
+                <input id="state" name="state" required="" type="hidden" />
+                <input id="country" name="country" required="" type="hidden" />
+                <input id="lat" name="lat" required="" type="hidden" />
+                <input id="lng" name="lng" required="" type="hidden" />
+                <input
+                  id="formatted_address"
+                  name="formatted_address"
+                  required=""
+                  type="hidden"
+                />
+                <input
+                  id="place_id"
+                  name="place_id"
+                  required=""
+                  type="hidden"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newEmail">Email:</label>
+              <div class="checkAddUserEmailInput">
+                <input
+                  id="newEmail"
+                  type="email"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddUserEmailInvalidMessage inputChecks">
+                <div class="error-message">Invalid Email Id.</div>
+              </div>
+              <div class="checkAddUserEmailMessage inputChecks">
+                <div class="error-message">Email Id Should Be Unique.</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newOrganisation">Organisation:</label>
+              <div class="checkAddUserOrganisationInput">
+                <input
+                  id="newOrganisation"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddUserOrganisationInvalidMessage inputChecks">
+                <div class="error-message">
+                  Invalid Input.
+                </div>
+              </div>
+              <div class="checkAddUserOrganisationMessage inputChecks">
+                <div class="error-message">
+                  Numbers are not allowed in input
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newDesignation">Designation:</label>
+              <div class="checkAddUserDesignationInput">
+                <input
+                  id="newDesignation"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddUserDesignationInvalidMessage inputChecks">
+                <div class="error-message">
+                  Invalid Input.
+                </div>
+              </div>
+              <div class="checkAddUserDesignationMessage inputChecks">
+                <div class="error-message">
+                  Numbers are not allowed in input
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newExperience">Experience:</label>
+              <div class="checkAddUserExperienceInput">
+                <input
+                  id="newExperience"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  placeholder="Years"
+                  required
+                />
+              </div>
+              <div class="checkAddUserExperienceInvalidMessage inputChecks">
+                <div class="error-message">
+                  Invalid Input.
+                </div>
+              </div>
+              <div class="checkAddUserExperienceMessage inputChecks">
+                <div class="error-message">
+                  Only Numbers are allowed in input
+                </div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newMobile_number">Contact No:</label>
+              <div class="checkAddUserPhoneInput">
+                <input
+                  id="newMobile_number"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="10"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddUserPhoneInvalidMessage inputChecks">
+                <div class="error-message">Only Numbers Are Allowed.</div>
+              </div>
+              <div class="checkAddUserPhoneMessage inputChecks">
+                <div class="error-message">Contact Number Not Valid</div>
+              </div>
+            </div>
+
+            <div
+              id="addUserLineLoader"
+              class="lineloader form-group mt-2 noDisplay"
+            >
+              <div class="linebar"></div>
+            </div>
+            <input
+              type="submit"
+              class="mb-2 mr-2 mt-3 btn btn-danger btn-md btn-block"
+              value="ADD"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

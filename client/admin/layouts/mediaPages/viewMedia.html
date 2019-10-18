@@ -1,0 +1,165 @@
+<template name="viewMedia">
+  {{#if is_allowed 'Post Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-box-open mr-2"></i>
+          VIEW MEDIA
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <main role="main" class="container">
+            {{#each viewMediaById }}
+            {{#if fetchType}}
+            <div
+              style="text-align: center"
+              class="d-flex align-items-center p-3 my-3 rounded shadow-lg"
+            >
+              <div class="media text-muted pt-3">
+                <p class="media-body pb-3 mb-0 small lh-125">
+                  <strong class="d-block text-gray-dark"
+                    >Content Source:</strong
+                  >
+                </p>
+              </div>
+
+              <div class="input-group ">
+                <input
+                  id="viewSourceURL"
+                  type="text"
+                  class="form-control"
+                  aria-label="URL"
+                  aria-describedby="ViewMediaBtn"
+                  autocomplete="off"
+                  value="{{ Source }}"
+                  readonly
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="ViewMediaBtn"
+                  >
+                    <i class="fas fa-play"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+            {{else}}
+            <div
+              style="text-align: center"
+              class="d-flex align-items-center p-3 my-3 rounded shadow-lg"
+            >
+              <img
+                src="{{ Image }}"
+                alt="media image"
+                style="width: 100%; border-radius: 5px;"
+              />
+            </div>
+            {{/if}}
+
+            <div class="my-3 p-3 bg-white rounded shadow-lg">
+              <a href="/mediamanagement/edit/{{ media_id }}"
+                ><button type="button" class="btn btn-danger">
+                  <i class="fas fa-pencil-alt"></i> EDIT THIS MEDIA
+                </button></a
+              >
+
+              <h6 class="border-bottom border-gray pb-2 mb-0 mt-3">
+                Media Details
+              </h6>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Media Type</strong>
+                  {{ Type }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Media Title</strong>
+                  {{ Title }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Meta Tags</strong>
+                  {{ metaTagsArr }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark"
+                    >Meta Description</strong
+                  >
+                  {{ metaDesc }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark mb-2"
+                    >Media Description</strong
+                  >
+                  {{{ Description }}}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Status</strong>
+                  {{#if Is_active}}
+                  Active
+                  {{else}}
+                  Inactive
+                  {{/if}}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <a href="/mediamanagement"
+                  ><button type="button" class="btn btn-primary">
+                    <i class="far fa-arrow-alt-circle-left"></i> BACK TO ALL
+                    MEDIA
+                  </button></a
+                >
+              </div>
+            </div>
+            {{/each}}
+          </main>
+          {{else}}
+          <div style="text-align: center">
+            <i
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

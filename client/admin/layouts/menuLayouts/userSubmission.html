@@ -1,0 +1,134 @@
+<template name="usersubmission">
+  {{#if is_allowed 'User Submissions'}}
+  <style>
+    .table-sm td,
+    .table-sm th {
+      padding: 0.3rem !important;
+    }
+  </style>
+  <div class="app-main__inner userManagementPage">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-mail-bulk mr-2"></i>User Submission
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+          <div class="card-body">
+            <div style="text-align: right">
+              <a href="/submitstory"
+                ><button type="button" class="btn btn-primary">
+                  <i class="fa fa-plus-square mr-2"></i>
+                  SUBMIT STORY
+                </button></a
+              >
+            </div>
+            <div>
+              <h5 style="display: inline" class="card-title">
+                ALL SUBMISSIONS
+              </h5>
+            </div>
+            {{#if Template.subscriptionsReady}}
+            <table
+              class="mb-0 table table-bordered table-striped table-sm shadow-sm"
+              id="allSubmissionsTable"
+            >
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact No.</th>
+                  <th>Type</th>
+                  <th>Story Link</th>
+                  <th>Created On</th>
+                  <th>Expire On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each allSubmissions }}
+                <script>
+                  $(document).ready(function() {
+                    $('#allSubmissionsTable').DataTable({
+                      destroy: true,
+                      aaSorting: []
+                    });
+                  });
+                </script>
+                <tr>
+                  <td>{{ increment @index }}</td>
+                  <td>{{ Name }}</td>
+                  <td>{{ Email }}</td>
+                  <td>{{ Mobile_number }}</td>
+                  <td>{{ Type }}</td>
+                  <td><a href="{{ Source }}">Click Here</a></td>
+                  <td>{{ created_at }}</td>
+                  <td>{{ expiry }}</td>
+                  <td>{{ Status }}</td>
+                  <td>
+                    <a href="/usersubmission/view/{{ user_submission_id }}"
+                      ><button class=" mb-2 mr-2 btn btn-warning btn-sm">
+                        <i class="far fa-eye"></i> View
+                      </button></a
+                    >
+                    {{#if fetchStatus Status}}
+                    <button
+                      id="{{ user_submission_id }}"
+                      class="select mb-2 mr-2 btn btn-primary btn-sm"
+                    >
+                      <i
+                        id="{{ user_submission_id }}select"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i>
+                      <i class="fa fa-check"></i> Select
+                    </button>
+                    <button
+                      id="{{ user_submission_id }}"
+                      class="drop mb-2 mr-2 btn btn-danger btn-sm"
+                    >
+                      <i
+                        id="{{ user_submission_id }}drop"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i>
+                      <i class="fa fa-close"></i> Drop
+                    </button>
+                    {{else}}
+                    {{#if selectedStatus Status}}
+                    <button class="mb-2 mr-2 btn btn-success btn-sm">
+                      {{ Status }}
+                    </button>
+                    {{else}}
+                    <button class="mb-2 mr-2 btn btn-secondary btn-sm">
+                      {{ Status }}
+                    </button>
+                    {{/if}}
+                    {{/if}}
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            {{else}}
+            <div style="text-align: center">
+              <i
+                id="allSubmissionsTableLoader"
+                class="spinner fas fa-spinner mr-2 mb-3 mt-3"
+                style="font-size:4em"
+              ></i>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

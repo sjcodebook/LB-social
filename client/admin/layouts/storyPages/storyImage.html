@@ -1,0 +1,85 @@
+<template name="storyImage">
+  {{#if Template.subscriptionsReady}}
+  <!-- {{#with StoryImages}}
+  <div class="storyImgContainer" style="width: 100%">
+    {{#each StoryImages}}
+    <img src="{{ image }}" alt="" class="story-img" />
+    {{/each}}
+    <form class="edit-story-image" enctype="multipart/form-data">
+      <label class="story-title" for="storyImage">Change Banner Image</label>
+      <span id="filename"></span>
+      <div class="overlay"></div>
+      <div class="story-upload-button">
+        <input
+          type="file"
+          name="storyImage"
+          id="storyImage"
+          class="black storyImage"
+          required
+        />
+        <br />
+      </div>
+
+      <div class="story-upload-button-2">
+        <button
+          type="submit"
+          value="Upload Photo"
+          id="storyImg-btn"
+          class="btn btn-sm btn-primary"
+        >
+          Upload Photo
+        </button>
+      </div>
+    </form>
+  </div>
+  {{else}} -->
+  <div class="storyImgContainer" style="width: 100%">
+    <img src="/assets/images/upload.png" alt="" class="default-img" />
+    <form class="edit-story-image" enctype="multipart/form-data">
+      <label class="story-title" for="storyImage">Choose Banner Image</label>
+      <span id="filename"></span>
+      <div class="overlay"></div>
+      <div class="story-upload-button">
+        <input
+          type="file"
+          name="storyImage"
+          id="storyImage"
+          class="black storyImage"
+          required
+        />
+        <br />
+      </div>
+
+      <div class="story-upload-button-2">
+        <button
+          type="submit"
+          value="Upload Photo"
+          id="storyImg-btn"
+          class="btn btn-sm btn-primary"
+        >
+          Upload Photo
+        </button>
+      </div>
+    </form>
+  </div>
+  <!-- {{/with}} -->
+  {{else}}
+  <div style="text-align: center">
+    <i
+      id="editCmsLoader"
+      class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+      style="font-size:4em"
+    ></i>
+  </div>
+  {{/if}}
+  <!-- Js for switching file picker span -->
+  <!-- <script type="text/javascript">
+    $(function() {
+      $('#storyImage:file').change(function() {
+        var fileName = $(this).val();
+        $('span').text(fileName);
+        $('label').hide();
+      });
+    });
+  </script> -->
+</template>

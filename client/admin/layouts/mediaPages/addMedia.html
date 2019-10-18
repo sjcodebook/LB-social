@@ -1,0 +1,197 @@
+<template name="addMedia">
+  {{#if is_allowed 'Post Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fa fa-plus-square mr-2"></i>
+          ADD MEDIA
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <a href="/mediamanagement"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          <form class="addAVForm">
+            <div class="form-group">
+              <label for="mediaType">Content Type:</label>
+              <select class="form-control" id="mediaType" required>
+                <option value="Video">Video</option>
+                <option value="Image">Image</option>
+              </select>
+            </div>
+
+            <div
+              id="checkImage"
+              class="rounded shadow-sm p-2 mt-2 mb-3 noDisplay"
+            >
+              {{> storyImage}}
+            </div>
+
+            <div class="form-group" id="mediaSourceSelectDiv">
+              <label for="mediaSourceSelect">Do You Want To:</label>
+              <select class="form-control" id="mediaSourceSelect" required>
+                <option value="URL">Input The URL</option>
+                <option value="Upload">Upload A Video</option>
+              </select>
+            </div>
+
+            <div class="custom-file mb-3" id="mediaUploadDiv" hidden="hidden">
+              <input type="file" class="custom-file-input" id="mediaUpload" />
+              <label class="custom-file-label" for="mediaUpload"
+                >Choose file</label
+              >
+            </div>
+            <div id="sourceURLDiv" class="mb-3">
+              <div class="checkAddedMediaURLInput">
+                <div class="input-group ">
+                  <input
+                    id="sourceURL"
+                    type="text"
+                    class="form-control"
+                    placeholder="URL"
+                    aria-label="URL"
+                    aria-describedby="ViewAddMediaBtn"
+                    autocomplete="off"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="ViewAddMediaBtn"
+                      title="Preview Media"
+                    >
+                      <i class="fas fa-play"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div class="checkAddedMediaURLInvalidMessage inputChecks">
+                <div class="error-message">Invalid URL</div>
+              </div>
+              <div id="downaddMediaPrev"></div>
+            </div>
+
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  var toolbarOptions = [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }],
+                    [{ indent: '-1' }, { indent: '+1' }],
+                    [{ direction: 'rtl' }],
+                    [{ size: ['small', false, 'large', 'huge'] }],
+                    [{ color: [] }, { background: [] }],
+                    [{ font: [] }],
+                    [{ align: [] }]
+                  ];
+
+                  var quill = new Quill('#media-editor', {
+                    modules: {
+                      toolbar: toolbarOptions
+                    },
+                    theme: 'snow'
+                  });
+                });
+              </script>
+              <label>Media Description:</label>
+              <div id="toolbar"></div>
+              <div class="checkAddedMediaDescInput">
+                <div id="media-editor" style="height: 350px;"></div>
+              </div>
+              <div class="checkAddedMediaDescMessage inputChecks">
+                <div class="error-message">Please Enter Description</div>
+              </div>
+              <div class="checkAddedMediaDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  $('#media-tags').select2({
+                    tags: true
+                  });
+                });
+              </script>
+              <label for="media-tags">Meta Tags:</label>
+              <select
+                class="form-control"
+                id="media-tags"
+                name="tags[]"
+                multiple="multiple"
+                required
+              >
+              </select>
+            </div>
+
+            <div>
+              <label class="mt-2" for="mediaMetaDesc">Meta Description:</label>
+              <div class="checkAddedMediaMetaDescInput">
+                <textarea
+                  id="mediaMetaDesc"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  cols="3"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <div class="checkAddedMediaMetaDescInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+              <div class="checkAddedMediaMetaDescLengthMessage inputChecks">
+                <div class="error-message">
+                  Length Should Not Exceed 200 Characters
+                </div>
+              </div>
+              <div class="checkAddedMediaMetaDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="addMediaLineLoader"
+              class="lineloader form-group noDisplay mt-2"
+            >
+              <div class="linebar"></div>
+            </div>
+            <input
+              type="submit"
+              class="mb-2 mr-2 mt-3 btn btn-danger btn-md btn-block"
+              value="Submit"
+            />
+          </form>
+          {{else}}
+          <div style="text-align: center">
+            <i
+              id="editCmsLoader"
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

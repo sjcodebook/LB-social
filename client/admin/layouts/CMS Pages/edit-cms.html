@@ -1,0 +1,41 @@
+<template name="editCms">
+  {{#if is_allowed 'CMS Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-pencil-alt mr-2"></i>
+          EDIT CMS
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <a href="/cms"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          <div>
+            {{> quill_editor}}
+          </div>
+          {{else}}
+          <div style="text-align: center">
+            <i
+              id="editCmsLoader"
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

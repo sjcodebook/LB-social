@@ -1,0 +1,164 @@
+<template name="filterUser">
+  {{#if is_allowed 'User Management'}}
+  <style>
+    .table-sm td,
+    .table-sm th {
+      padding: 0.3rem !important;
+    }
+  </style>
+  <div class="app-main__inner userManagementPage">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-users mr-2"></i>User Management
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+          <div class="card-body">
+            <hr />
+            <h5>
+              <i class="fas fa-filter mr-2"></i>
+              FILTER USERS
+            </h5>
+
+            <div class="position-relative form-group">
+              <label for="exampleSelect" class="">State:</label>
+              <select
+                name="select"
+                class="form-control"
+                onchange="{{ cmsPageUrl }}"
+              >
+                <option id="2345" value="/cms/edit-cms/2345">About Us</option>
+                <option id="2346" value="/cms/edit-cms/2346"
+                  >Terms and Conditions</option
+                >
+                <option id="2347" value="/cms/edit-cms/2347"
+                  >Privacy Policy</option
+                >
+                <option id="2348" value="/cms/edit-cms/2348">Contact Us</option>
+              </select>
+            </div>
+            <div class="position-relative form-group">
+              <label for="exampleSelect" class="">Language:</label>
+              <select
+                name="select"
+                class="form-control"
+                onchange="{{ cmsPageUrl }}"
+              >
+                <option id="2345" value="/cms/edit-cms/2345">About Us</option>
+                <option id="2346" value="/cms/edit-cms/2346"
+                  >Terms and Conditions</option
+                >
+                <option id="2347" value="/cms/edit-cms/2347"
+                  >Privacy Policy</option
+                >
+                <option id="2348" value="/cms/edit-cms/2348">Contact Us</option>
+              </select>
+            </div>
+
+            <hr />
+            <table
+              class="mb-0 table table-bordered table-striped table-sm shadow-sm"
+              id="allUsersTable"
+            >
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Contact No.</th>
+                  <th>Language</th>
+                  <th>Profession</th>
+                  <th>Added On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each allUsers }}
+                <script>
+                  $(document).ready(function() {
+                    $('#allUsersTable').DataTable();
+                  });
+                </script>
+                <tr>
+                  <td>{{ increment @index }}</td>
+                  <td>{{ name }}</td>
+                  <td>{{ email }}</td>
+                  <td>{{ mobile_number }}</td>
+                  <td>{{ Language }}</td>
+                  <td>{{ Profession }}</td>
+                  <td>{{ createdAt }}</td>
+
+                  {{#if is_active}}
+                  <td>Active</td>
+                  {{else}}
+                  <td>Inactive</td>
+                  {{/if}}
+                  <td>
+                    <a href="/usermanagement/edit/{{ user_id }}"
+                      ><button
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#editUserModal"
+                        class="mb-2 mr-2 btn btn-danger btn-sm"
+                      >
+                        <i class="fas fa-pencil-alt"></i> Edit
+                      </button></a
+                    >
+                    <a href="/usermanagement/view/{{ user_id }}">
+                      <button class="mb-2 mr-2 btn btn-warning btn-sm">
+                        <i class="far fa-eye"></i> View
+                      </button>
+                    </a>
+                    {{#if is_active}}
+                    <button
+                      id="{{ user_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-secondary btn-sm"
+                    >
+                      <i
+                        id="{{ user_id }}userStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Inactivate
+                    </button>
+                    {{else}}
+                    <button
+                      id="{{ user_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-warning btn-sm"
+                    >
+                      <i
+                        id="{{ user_id }}userStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Activate
+                    </button>
+                    {{/if}}
+                    <a href="/usermanagement/delete/{{ user_id }}"
+                      ><button
+                        type="button"
+                        data-toggle="modal"
+                        data-target="#deleteUserModal"
+                        class="mb-2 mr-2 btn btn-danger btn-sm"
+                      >
+                        <i class="far fa-trash-alt"></i> Delete
+                      </button></a
+                    >
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

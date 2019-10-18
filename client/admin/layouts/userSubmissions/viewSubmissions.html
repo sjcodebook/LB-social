@@ -1,0 +1,141 @@
+<template name="viewUsersubmission">
+  {{#if is_allowed 'User Submissions'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="far fa-eye mr-2"></i>
+          VIEW SUBMISSION
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          <main role="main" class="container">
+            {{#each Submission }}
+            <div class="d-flex align-items-center p-3 my-3 rounded shadow-lg">
+              <div class="accordion" id="accordionExample" style="width: 100%">
+                <div class="card">
+                  <div class="card-header" id="headingOne">
+                    <button
+                      class="btn btn-info btn-block"
+                      type="button"
+                      data-toggle="collapse"
+                      data-target="#submissionPreview"
+                      aria-expanded="true"
+                      aria-controls="submissionPreview"
+                    >
+                      Preview
+                    </button>
+                  </div>
+
+                  <div
+                    id="submissionPreview"
+                    class="collapse"
+                    aria-labelledby="headingOne"
+                    data-parent="#accordionExample"
+                  >
+                    <div class="card-body">
+                      <iframe
+                        src="{{ Source }}"
+                        frameborder="1"
+                        width="100%"
+                        height="800"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="my-3 p-3 bg-white rounded shadow-lg">
+              <h6 class="border-bottom border-gray pb-2 mb-0">
+                Submission Details
+              </h6>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Name</strong>
+                  {{ Name }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Email</strong>
+                  {{ Email }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Contact Number</strong>
+                  {{ Mobile_number }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Type</strong>
+                  {{ Type }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Story Link</strong>
+                  <a href="{{ Source }}">{{ Source }}</a>
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Status</strong>
+                  {{ Status }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Created At</strong>
+                  {{ created_at }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Description</strong>
+                  {{ Description }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <a href="/usersubmission"
+                  ><button type="button" class="btn btn-primary btn-block">
+                    <i class="far fa-arrow-alt-circle-left"></i> BACK TO ALL
+                    SUBMISSIONS
+                  </button></a
+                >
+              </div>
+            </div>
+            {{/each}}
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

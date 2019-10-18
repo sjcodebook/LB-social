@@ -1,0 +1,206 @@
+<template name="editStory">
+  {{#if is_allowed 'Post Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-pencil-alt mr-2"></i>
+          EDIT BLOG
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <a href="/storymanagement"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          {{#each editStoryById }}
+          <div class="rounded shadow-sm p-2">
+            <div class="storyImgContainer" style="width: 100%">
+              <img src="/assets/images/upload.png" alt="" class="default-img" />
+              <form class="edit-story-image" enctype="multipart/form-data">
+                <label class="story-title" for="storyImage"
+                  >Choose Banner Image</label
+                >
+                <span id="filename"></span>
+                <div class="overlay"></div>
+                <div class="story-upload-button">
+                  <input
+                    type="file"
+                    name="storyImage"
+                    id="storyImage"
+                    class="black storyImage"
+                    required
+                  />
+                  <br />
+                </div>
+
+                <div class="story-upload-button-2">
+                  <button
+                    type="button"
+                    value="Upload Photo"
+                    id="storyImg-btn"
+                    class="btn btn-sm btn-primary"
+                  >
+                    Upload Photo
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <br />
+          <form class="editStoryForm">
+            <div class="form-group">
+              <label for="editContentTitle">Blog Title:</label>
+              <div class="checkEditStoryTitleInput">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="editContentTitle"
+                  maxlength="100"
+                  autocomplete="off"
+                  value="{{ Title }}"
+                  required
+                />
+              </div>
+              <div class="checkEditStoryTitleInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+              <div class="checkEditStoryTitleLengthMessage inputChecks">
+                <div class="error-message">
+                  Length Should Not Exceed 100 Characters
+                </div>
+              </div>
+              <div class="checkEditStoryTitleNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  let toolbarOptions = [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }],
+                    [{ indent: '-1' }, { indent: '+1' }],
+                    [{ direction: 'rtl' }],
+                    [{ size: ['small', false, 'large', 'huge'] }],
+                    [{ color: [] }, { background: [] }],
+                    [{ font: [] }],
+                    [{ align: [] }]
+                  ];
+
+                  let quill = new Quill('#story-editor', {
+                    modules: {
+                      toolbar: toolbarOptions
+                    },
+                    theme: 'snow'
+                  });
+                });
+              </script>
+              <label>Blog Description:</label>
+              <div id="toolbar"></div>
+              <div class="checkEditStoryDescInput">
+                <div id="story-editor">{{{ Description }}}</div>
+              </div>
+              <div class="checkEditStoryDescMessage inputChecks">
+                <div class="error-message">Please Enter Description</div>
+              </div>
+              <div class="checkEditStoryDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  $('#edit-story-tags').select2({
+                    tags: true
+                  });
+                });
+              </script>
+              <label for="edit-story-tags">Meta Tags:</label>
+              <select
+                class="form-control"
+                id="edit-story-tags"
+                name="tags[]"
+                multiple="multiple"
+                required
+              >
+                {{#each tags}}
+                <option value="{{ Tag }}" selected>{{ Tag }}</option>
+                {{/each}}
+              </select>
+            </div>
+
+            <div>
+              <label class="mt-2" for="editStorymetaDesc"
+                >Meta Description:</label
+              >
+              <div class="checkeditStorymetaDescInput">
+                <textarea
+                  id="editStorymetaDesc"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  cols="3"
+                  rows="3"
+                  required
+                  >{{ metaDesc }}</textarea
+                >
+              </div>
+              <div class="checkEditStorymetaDescInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+              <div class="checkEditStorymetaDescLengthMessage inputChecks">
+                <div class="error-message">
+                  Length Should Not Exceed 200 Characters
+                </div>
+              </div>
+              <div class="checkEditStorymetaDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+            <div
+              id="editStoryLineLoader"
+              class="lineloader form-group noDisplay mt-2"
+            >
+              <div class="linebar"></div>
+            </div>
+            <input
+              type="submit"
+              class="mb-2 mr-2 mt-3 btn btn-danger btn-md btn-block"
+              value="Submit"
+            />
+          </form>
+          {{/each}}
+          {{else}}
+          <div style="text-align: center">
+            <i
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

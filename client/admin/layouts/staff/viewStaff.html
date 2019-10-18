@@ -1,0 +1,101 @@
+<template name="viewStaff">
+  {{#if is_allowed 'Staff Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-user mr-2"></i>
+          VIEW STAFF
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          <main role="main" class="container">
+            {{#each userById }}
+            <div class="d-flex align-items-center p-3 my-3 rounded shadow-lg">
+              <i class="far fa-user-circle" style="font-size: 1.5em;"></i>
+              <div class="lh-100 ml-3">
+                <h6 class="mb-0 lh-100">User Name</h6>
+                <small>{{ name }}</small>
+              </div>
+            </div>
+
+            <div class="my-3 p-3 bg-white rounded shadow-lg">
+              <a href="/staffmanagement/edit/{{ user_id }}"
+                ><button type="button" class="btn btn-danger">
+                  <i class="fas fa-pencil-alt"></i> EDIT THIS EMPLOYEE
+                </button></a
+              >
+
+              <h6 class="border-bottom border-gray pb-2 mb-0 mt-3">
+                Employee Details
+              </h6>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Employee ID</strong>
+                  {{ employee_id }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Email</strong>
+                  {{ email }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Contact Number</strong>
+                  {{ mobile_number }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Can Access</strong>
+                  {{ rights }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Status</strong>
+                  {{#if is_active}}
+                  Active
+                  {{else}}
+                  Inactive
+                  {{/if}}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <a href="/staffmanagement"
+                  ><button type="button" class="btn btn-primary btn-block">
+                    <i class="far fa-arrow-alt-circle-left"></i> BACK TO ALL
+                    STAFF
+                  </button></a
+                >
+              </div>
+            </div>
+            {{/each}}
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

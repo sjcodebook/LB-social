@@ -1,0 +1,151 @@
+<template name="tags">
+  {{#if is_allowed 'Master Settings'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-cogs mr-3"></i>Master Settings
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <div id="accordion" class="accordion-wrapper">
+          <div class="card mb-2">
+            <div id="headingTwo" class="card-header">
+              <button
+                type="button"
+                data-toggle="collapse"
+                data-target="#collapseOne2"
+                aria-expanded="true"
+                aria-controls="collapseTwo"
+                class="text-left m-0 p-0 btn btn-link btn-block"
+              >
+                <h5 class="m-0 p-0">
+                  TAGS
+                </h5>
+              </button>
+            </div>
+            <div
+              data-parent="#accordion3"
+              id="collapseOne2"
+              class="collapse show"
+            >
+              <div class="card-body">
+                <div style="text-align: right">
+                  <button
+                    type="button"
+                    class="btn btn-primary mb-3 shadow-sm"
+                    data-toggle="modal"
+                    data-target="#ManageTagModal"
+                    id="addTagBtn"
+                  >
+                    ADD TAG
+                  </button>
+                </div>
+
+                <!-- Table -->
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="main-card mb-3 card">
+                      <div class="card-body">
+                        <h5 class="card-title">LISTED TAGS</h5>
+                        {{#if Template.subscriptionsReady}}
+                        <table
+                          id="allTagTable"
+                          class="mb-0 table table-bordered table-striped"
+                        >
+                          <thead>
+                            <tr>
+                              <th>Tag Name</th>
+                              <th>Added On</th>
+                              <th>Status</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {{#each masterTags }}
+                            <script>
+                              $(document).ready(function() {
+                                $('#allTagTable').DataTable({
+                                  destroy: true,
+                                  aaSorting: []
+                                });
+                              });
+                            </script>
+                            <tr>
+                              <td>{{ hash_tag }}</td>
+                              <td>{{ created_at }}</td>
+                              {{#if is_active}}
+                              <td>Active</td>
+                              {{else}}
+                              <td>Inactive</td>
+                              {{/if}}
+                              <td>
+                                <a
+                                  href="/mastersettings/tags/{{ hash_tag_id }}"
+                                >
+                                  <button
+                                    type="button"
+                                    class="mb-2 mr-2 btn btn-danger"
+                                    data-toggle="modal"
+                                    data-target="#EditTagModal"
+                                    id="{{ hash_tag_id }}"
+                                  >
+                                    <i class="fas fa-pencil-alt"></i> Edit
+                                  </button>
+                                </a>
+                                {{#if is_active}}
+                                <button
+                                  id="{{ hash_tag_id }}"
+                                  class="changeTagStatus mb-2 mr-2 btn btn-secondary"
+                                >
+                                  <i
+                                    id="{{ hash_tag_id }}tagStatus"
+                                    class="spinner fas fa-spinner mr-2 noDisplay"
+                                  ></i
+                                  >Deactivate
+                                </button>
+                                {{else}}
+                                <button
+                                  id="{{ hash_tag_id }}"
+                                  class="changeTagStatus mb-2 mr-2 btn btn-warning"
+                                >
+                                  <i
+                                    id="{{ hash_tag_id }}tagStatus"
+                                    class="spinner fas fa-spinner mr-2 noDisplay"
+                                  ></i
+                                  >Activate
+                                </button>
+                                {{/if}}
+                              </td>
+                            </tr>
+                            {{/each}}
+                          </tbody>
+                        </table>
+                        {{else}}
+                        <div style="text-align: center">
+                          <i
+                            id="tagTableLoader"
+                            class="spinner fas fa-spinner mr-2 mb-3 mt-3"
+                            style="font-size:4em"
+                          ></i>
+                        </div>
+                        {{/if}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- End of Table -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

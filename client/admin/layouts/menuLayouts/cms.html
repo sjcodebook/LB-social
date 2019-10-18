@@ -1,0 +1,90 @@
+<template name="cms">
+  {{#if is_allowed 'CMS Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-file-alt mr-2"></i>CMS
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+          <div class="card-body">
+            <h5 class="card-title">CMS PAGES</h5>
+            {{#if Template.subscriptionsReady}}
+            <table class="mb-0 table table-bordered shadow-sm table-striped">
+              <thead>
+                <tr>
+                  <th>Page Name</th>
+                  <th>Created On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each cms }}
+                <tr>
+                  <td>
+                    <a href="/cms/pages/{{ cms_type }}">{{ page_title }}</a>
+                  </td>
+                  <td>{{ created_at }}</td>
+                  {{#if is_active}}
+                  <td>Active</td>
+                  {{else}}
+                  <td>Inactive</td>
+                  {{/if}}
+                  <td>
+                    <a href="/cms/edit-cms/{{ cms_id }}"
+                      ><button class="mb-2 mr-2 btn btn-danger">
+                        <i class="fas fa-pencil-alt"></i> Edit
+                      </button></a
+                    >
+                    {{#if is_active}}
+                    <button
+                      id="{{ cms_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-secondary"
+                    >
+                      <i
+                        id="{{ cms_id }}cmsStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Deactivate
+                    </button>
+                    {{else}}
+                    <button
+                      id="{{ cms_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-warning"
+                    >
+                      <i
+                        id="{{ cms_id }}cmsStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Activate
+                    </button>
+                    {{/if}}
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            {{else}}
+            <div style="text-align: center">
+              <i
+                id="cmsTableLoader"
+                class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+                style="font-size:4em"
+              ></i>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

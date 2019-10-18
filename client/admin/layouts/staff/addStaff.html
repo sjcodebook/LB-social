@@ -1,0 +1,159 @@
+<template name="addStaff">
+  {{#if is_allowed 'Staff Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fa fa-plus-square mr-2"></i>
+          ADD STAFF
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          <a href="/staffmanagement"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          <form class="addStaffForm">
+            <div>
+              <label for="newStaffName">User Name:</label>
+              <div class="checkAddStaffNameInput">
+                <input
+                  id="newStaffName"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddStaffNameNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers are not allowed in input
+                </div>
+              </div>
+              <div class="checkAddStaffNameInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newStaffId">Employee Id:</label>
+              <div class="checkAddStaffIdInput">
+                <input
+                  id="newStaffId"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  minlength="6"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddStaffIdInvalidMessage inputChecks">
+                <div class="error-message">Invalid Employee Id</div>
+              </div>
+              <div class="checkAddStaffIdMessage inputChecks">
+                <div class="error-message">Employee Id Should Be Unique.</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newStaffEmail">Email:</label>
+              <div class="checkAddStaffEmailInput">
+                <input
+                  id="newStaffEmail"
+                  type="email"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="40"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddStaffEmailInvalidMessage inputChecks">
+                <div class="error-message">Invalid Email Id.</div>
+              </div>
+              <div class="checkAddStaffEmailMessage inputChecks">
+                <div class="error-message">Email Id Should Be Unique.</div>
+              </div>
+            </div>
+
+            <div>
+              <label class="mt-2" for="newStaffMobile_number">Mobile No:</label>
+              <div class="checkAddStaffPhoneInput">
+                <input
+                  id="newStaffMobile_number"
+                  type="text"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  minlength="10"
+                  maxlength="10"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddStaffPhoneInvalidMessage inputChecks">
+                <div class="error-message">Only Numbers Are Allowed.</div>
+              </div>
+              <div class="checkAddStaffPhoneMessage inputChecks">
+                <div class="error-message">Contact Number Not Valid</div>
+              </div>
+            </div>
+
+            <div>
+              <script>
+                $(document).ready(function() {
+                  $('#newStaffRights').select2();
+                });
+              </script>
+              <label class="mt-2" for="newStaffRights">Can Access:</label>
+
+              <select
+                class="form-control"
+                id="newStaffRights"
+                name="rights[]"
+                multiple="multiple"
+                required
+              >
+                <option value="User Management">User Management</option>
+                <option value="Media Management">Media Management</option>
+                <option value="Story Management">Story Management</option>
+                <option value="User Submissions">User Submissions</option>
+                <option value="Staff Management">Staff Management</option>
+                <option value="CMS Management">CMS Management</option>
+                <option value="Master Settings">Master Settings</option>
+                <option value="Notifications">Notifications</option>
+                <option value="Abuse Reports">Abuse Reports</option>
+              </select>
+            </div>
+            <div
+              id="addStaffLineLoader"
+              class="lineloader form-group mt-2 noDisplay"
+            >
+              <div class="linebar"></div>
+            </div>
+            <input
+              type="submit"
+              class="mb-2 mr-2 mt-3 btn btn-danger btn-md btn-block"
+              value="Add"
+            />
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

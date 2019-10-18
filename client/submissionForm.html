@@ -1,0 +1,132 @@
+<template name="submissionForm">
+  <div class="bg-light">
+    <div class="container" style="width: 50%;">
+      <div class="py-3 text-center">
+        <img
+          src="./assets/images/Logo-folklog.gif"
+          alt="logo"
+          style="width: 15%"
+          class="mt-2 mb-2"
+        />
+        <h2>FolkLog</h2>
+        <p class="lead">
+          Story Submission Form
+        </p>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+          <a href="/"
+            ><button type="button" class="btn btn-primary btn-sm">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK TO HOME
+            </button></a
+          >
+          <form class="submitStoryForm">
+            <div class="mt-3 form-group">
+              <label for="submitStoryName">Name:</label>
+              <input
+                id="submitStoryName"
+                type="text"
+                class="form-control"
+                value=""
+                aria-describedby="inputGroupPrepend"
+                maxlength="50"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="submitStoryEmail">Email:</label>
+              <div class="checksubmitStoryEmailInput">
+                <input
+                  id="submitStoryEmail"
+                  type="email"
+                  class="form-control"
+                  value=""
+                  aria-describedby="inputGroupPrepend"
+                  maxlength="50"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checksubmitStoryEmailInvalidMessage inputChecks">
+                <div class="error-message">Invalid Email Id.</div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="submitStoryMobile_number">Contact No:</label>
+              <input
+                id="submitStoryMobile_number"
+                type="text"
+                class="form-control"
+                value=""
+                aria-describedby="inputGroupPrepend"
+                maxlength="10"
+                minlength="10"
+                autocomplete="off"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="submitStoryType">Content Type:</label>
+              <select class="form-control" id="submitStoryType" required>
+                <option value="Audio">Audio</option>
+                <option value="Video">Video</option>
+                <option value="Text">Text Based</option>
+              </select>
+            </div>
+
+            <label for="submitStorysourceURL"> Content Source:</label>
+            <div class="checksubmitStoryMediaURLInput">
+              <div class="input-group ">
+                <input
+                  id="submitStorysourceURL"
+                  type="text"
+                  class="form-control"
+                  placeholder="URL"
+                  aria-label="URL"
+                  aria-describedby="button-addon2"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+            </div>
+            <div class="checksubmitStoryMediaURLInvalidMessage inputChecks">
+              <div class="error-message">Invalid URL</div>
+            </div>
+
+            <div class="mt-3 form-group">
+              <label for="submitStoryDesc">Description:</label>
+              <textarea
+                id="submitStoryDesc"
+                type="text"
+                class="form-control"
+                cols="10"
+                rows="10"
+                value=""
+                aria-describedby="inputGroupPrepend"
+                autocomplete="off"
+                required
+              ></textarea>
+            </div>
+
+            <div class="form-group">
+              <input
+                type="submit"
+                class="mb-2 mr-2 mt-3 btn btn-primary btn-block"
+                value="Submit"
+              />
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <footer class="my-5 pt-5 text-muted text-center text-small">
+        <p class="mb-1">&copy; 2019 FolkLog</p>
+      </footer>
+    </div>
+  </div>
+</template>

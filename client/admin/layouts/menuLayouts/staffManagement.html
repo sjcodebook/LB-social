@@ -1,0 +1,132 @@
+<template name="staffManagement">
+  {{#if is_allowed 'Staff Management'}}
+  <style>
+    .table-sm td,
+    .table-sm th {
+      padding: 0.2rem !important;
+    }
+  </style>
+  <div class="app-main__inner userManagementPage">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-users-cog mr-2"></i>Staff Management
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="main-card mb-3 card">
+          <div class="card-body">
+            <div style="text-align: right">
+              <a href="/staffmanagement/addstaff"
+                ><button type="button" class="btn btn-primary">
+                  <i class="fa fa-plus-square mr-2"></i>
+                  ADD STAFF
+                </button></a
+              >
+            </div>
+            <div>
+              <h5 style="display: inline" class="card-title">ALL STAFF</h5>
+            </div>
+            {{#if Template.subscriptionsReady}}
+            <table
+              class="mb-0 table table-bordered table-striped table-sm shadow-sm"
+              id="allUsersTable"
+            >
+              <thead>
+                <tr>
+                  <th>S.No</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Employee ID</th>
+                  <th>Contact No.</th>
+                  <th>Added On</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{#each allUsers }}
+                <script>
+                  $(document).ready(function() {
+                    $('#allUsersTable').DataTable({
+                      destroy: true,
+                      aaSorting: []
+                    });
+                  });
+                </script>
+                <tr>
+                  <td>{{ increment @index }}</td>
+                  <td>{{ name }}</td>
+                  <td>{{ email }}</td>
+                  <td>{{ employee_id }}</td>
+                  <td>{{ mobile_number }}</td>
+                  <td>{{ created_at }}</td>
+
+                  {{#if is_active}}
+                  <td>Active</td>
+                  {{else}}
+                  <td>Inactive</td>
+                  {{/if}}
+                  <td>
+                    <a href="/staffmanagement/edit/{{ user_id }}"
+                      ><button
+                        type="button"
+                        class="mb-2 mr-2 btn btn-danger btn-sm"
+                      >
+                        <i class="fas fa-pencil-alt"></i> Edit
+                      </button></a
+                    >
+                    <a href="/staffmanagement/view/{{ user_id }}">
+                      <button class="mb-2 mr-2 btn btn-warning btn-sm">
+                        <i class="far fa-eye"></i> View
+                      </button>
+                    </a>
+                    {{#if is_active}}
+                    <button
+                      id="{{ user_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-secondary btn-sm"
+                    >
+                      <i
+                        id="{{ user_id }}userStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Inactivate
+                    </button>
+                    {{else}}
+                    <button
+                      id="{{ user_id }}"
+                      class="changeStatus mb-2 mr-2 btn btn-warning btn-sm"
+                    >
+                      <i
+                        id="{{ user_id }}userStatus"
+                        class="spinner fas fa-spinner mr-2 noDisplay"
+                      ></i
+                      >Activate
+                    </button>
+                    {{/if}}
+                  </td>
+                </tr>
+                {{/each}}
+              </tbody>
+            </table>
+            {{else}}
+            <div style="text-align: center">
+              <i
+                id="allUsersTableLoader"
+                class="spinner fas fa-spinner mr-2 mb-3 mt-3"
+                style="font-size:4em"
+              ></i>
+            </div>
+            {{/if}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

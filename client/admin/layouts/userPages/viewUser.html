@@ -1,0 +1,149 @@
+<template name="viewUser">
+  {{#if is_allowed 'User Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-user mr-2"></i>
+          VIEW USER
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          <main role="main" class="container">
+            {{#each userById }}
+
+            <div class="d-flex align-items-center p-3 my-3 rounded shadow-lg">
+              <i class="far fa-user-circle" style="font-size: 1.5em;"></i>
+              <div class="lh-100 ml-3">
+                <h6 class="mb-0 lh-100">Pseudonym</h6>
+                <small>{{ name }}</small>
+              </div>
+            </div>
+
+            <div class="my-3 p-3 bg-white rounded shadow-lg">
+              <h6 class="border-bottom border-gray pb-2 mb-0">
+                User Details
+              </h6>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Designation</strong>
+                  {{ Designation }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Connections</strong>
+                  {{ Connections }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Age</strong>
+                  {{ Age }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Gender</strong>
+                  {{ Gender }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Country</strong>
+                  {{ country }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark"
+                    >Current Location</strong
+                  >
+                  {{ entered_location }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Industry</strong>
+                  {{ Industry }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Role</strong>
+                  {{ Role }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark"
+                    >Number of employees</strong
+                  >
+                  {{ employee_number }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark"
+                    >Approximate Annual revenue</strong
+                  >
+                  {{ annual_revenue }}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Status</strong>
+                  {{#if is_active}}
+                  Active
+                  {{else}}
+                  Inactive
+                  {{/if}}
+                </p>
+              </div>
+              <div class="media text-muted pt-3">
+                <a href="/usermanagement"
+                  ><button type="button" class="btn btn-primary btn-block">
+                    <i class="far fa-arrow-alt-circle-left"></i> BACK TO ALL
+                    USERS
+                  </button></a
+                >
+              </div>
+            </div>
+            {{/each}}
+          </main>
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

@@ -1,0 +1,119 @@
+<template name="viewStory">
+  {{#if is_allowed 'Post Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fas fa-box-open mr-2"></i>
+          VIEW BLOG
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <main role="main" class="container">
+            {{#each viewStoryById }}
+            <div
+              style="text-align: center"
+              class="d-flex align-items-center p-3 my-3 rounded shadow-lg"
+            >
+              <img
+                src="{{ Image }}"
+                alt="story image"
+                style="width: 100%; border-radius: 5px;"
+              />
+            </div>
+
+            <div class="my-3 p-3 bg-white rounded shadow-lg">
+              <a href="/storymanagement/edit/{{ story_id }}"
+                ><button type="button" class="btn btn-danger">
+                  <i class="fas fa-pencil-alt"></i> EDIT THIS BLOG
+                </button></a
+              >
+
+              <h6 class="border-bottom border-gray pb-2 mb-0 mt-3">
+                Blog Details
+              </h6>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Blog Title</strong>
+                  {{ Title }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Meta Tags</strong>
+                  {{ metaTagsArr }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark"
+                    >Meta Description</strong
+                  >
+                  {{ metaDesc }}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark mb-2"
+                    >Blog Description</strong
+                  >
+                  {{{ Description }}}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <p
+                  class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray"
+                >
+                  <strong class="d-block text-gray-dark">Status</strong>
+                  {{#if Is_active}}
+                  Active
+                  {{else}}
+                  Inactive
+                  {{/if}}
+                </p>
+              </div>
+
+              <div class="media text-muted pt-3">
+                <a href="/storymanagement"
+                  ><button type="button" class="btn btn-primary">
+                    <i class="far fa-arrow-alt-circle-left"></i> BACK TO ALL
+                    BLOGS
+                  </button></a
+                >
+              </div>
+            </div>
+            {{/each}}
+          </main>
+          {{else}}
+          <div style="text-align: center">
+            <i
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>

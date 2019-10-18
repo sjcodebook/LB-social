@@ -1,0 +1,168 @@
+<template name="addStory">
+  {{#if is_allowed 'Post Management'}}
+  <div class="app-main__inner">
+    <div class="app-page-title  contentCenter">
+      <div class="page-title-wrapper inlineContent">
+        <div class="page-title-heading">
+          <i class="fa fa-plus-square mr-2"></i>
+          ADD BLOG
+        </div>
+      </div>
+    </div>
+    <div class="col-md-12">
+      <div class="main-card mb-3 card">
+        <div class="card-body">
+          {{#if Template.subscriptionsReady}}
+          <a href="/storymanagement"
+            ><button type="button" class="btn btn-primary">
+              <i class="far fa-arrow-alt-circle-left"></i> BACK
+            </button></a
+          >
+          <hr />
+          <div class="rounded shadow-sm p-2">
+            {{> storyImage}}
+          </div>
+          <br />
+          <form class="addStoryForm">
+            <div class="form-group">
+              <label for="storyTitle">Blog Title:</label>
+              <div class="checkAddedStoryTitleInput">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="storyTitle"
+                  maxlength="100"
+                  autocomplete="off"
+                  required
+                />
+              </div>
+              <div class="checkAddedStoryTitleInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+              <div class="checkAddedStoryTitleLengthMessage inputChecks">
+                <div class="error-message">
+                  Length Should Not Exceed 100 Characters
+                </div>
+              </div>
+              <div class="checkAddedStoryTitleNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  let toolbarOptions = [
+                    ['bold', 'italic', 'underline', 'strike'],
+                    ['blockquote', 'code-block'],
+                    [{ header: [1, 2, 3, 4, 5, 6, false] }],
+                    [{ list: 'ordered' }, { list: 'bullet' }],
+                    [{ script: 'sub' }, { script: 'super' }],
+                    [{ indent: '-1' }, { indent: '+1' }],
+                    [{ direction: 'rtl' }],
+                    [{ size: ['small', false, 'large', 'huge'] }],
+                    [{ color: [] }, { background: [] }],
+                    [{ font: [] }],
+                    [{ align: [] }]
+                  ];
+
+                  let quill = new Quill('#story-editor', {
+                    modules: {
+                      toolbar: toolbarOptions
+                    },
+                    theme: 'snow'
+                  });
+                });
+              </script>
+              <label>Blog Description:</label>
+              <div id="toolbar"></div>
+              <div class="checkAddedStoryDescInput">
+                <div id="story-editor" style="height: 350px;"></div>
+              </div>
+              <div class="checkAddedStoryDescMessage inputChecks">
+                <div class="error-message">Please Enter Description</div>
+              </div>
+              <div class="checkAddedStoryDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <script>
+                $(document).ready(function() {
+                  $('#story-tags').select2({
+                    tags: true
+                  });
+                });
+              </script>
+              <label for="story-tags">Meta Tags:</label>
+              <select
+                class="form-control"
+                id="story-tags"
+                name="tags[]"
+                multiple="multiple"
+                required
+              >
+              </select>
+            </div>
+
+            <div>
+              <label class="mt-2" for="storymetaDesc">Meta Description:</label>
+              <div class="checkAddedStorymetaDescInput">
+                <textarea
+                  id="storymetaDesc"
+                  autocomplete="off"
+                  class="form-control"
+                  type="text"
+                  cols="3"
+                  rows="3"
+                  required
+                ></textarea>
+              </div>
+              <div class="checkAddedStorymetaDescInvalidMessage inputChecks">
+                <div class="error-message">Invalid Input</div>
+              </div>
+              <div class="checkAddedStorymetaDescLengthMessage inputChecks">
+                <div class="error-message">
+                  Length Should Not Exceed 200 Characters
+                </div>
+              </div>
+              <div class="checkAddedStorymetaDescNumberMessage inputChecks">
+                <div class="error-message">
+                  Numbers Are Not Allowed In Input
+                </div>
+              </div>
+            </div>
+
+            <div
+              id="addStoryLineLoader"
+              class="lineloader form-group noDisplay mt-2"
+            >
+              <div class="linebar"></div>
+            </div>
+            <input
+              type="submit"
+              class="mb-2 mr-2 mt-3 btn btn-danger btn-md btn-block"
+              value="ADD"
+            />
+          </form>
+          {{else}}
+          <div style="text-align: center">
+            <i
+              class="spinner fas fa-spinner mr-2 mb-3 mt-3 "
+              style="font-size:4em"
+            ></i>
+          </div>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {{else}}
+  {{> noAccess}}
+  {{/if}}
+</template>
